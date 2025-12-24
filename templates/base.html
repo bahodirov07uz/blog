@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Developer Portfolio{% endblock %}</title>
+
+    <!-- Tailwind CDN for simplicity; for production, switch to compiled assets -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['system-ui', 'ui-sans-serif', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#111827',
+                            soft: '#1f2937',
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Optional Alpine.js for lightweight interactivity -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen bg-black text-gray-100 antialiased">
+    <header
+        x-data="{ open: false }"
+        class="sticky top-0 z-30 border-b border-neutral-800 bg-black/80 backdrop-blur">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+            <a href="{% url 'pages:home' %}" class="flex items-center gap-2">
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded bg-white text-black text-sm font-semibold">DP</span>
+                <span class="text-sm font-medium tracking-wide text-gray-200">Muhammadyahyo's blog</span>
+            </a>
+
+            <button
+                @click="open = !open"
+                class="inline-flex items-center justify-center rounded border border-neutral-700 p-2 text-gray-300 hover:border-gray-500 hover:bg-neutral-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-500 sm:hidden"
+                type="button"
+                aria-label="Toggle navigation">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                    <path x-show="!open" d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    <path x-show="open" x-cloak d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+            </button>
+
+            <div class="hidden items-center gap-8 text-sm font-medium text-gray-300 sm:flex">
+                <a href="{% url 'pages:home' %}" class="transition hover:text-white">Home</a>
+                <a href="{% url 'pages:about' %}" class="transition hover:text-white">About</a>
+                <a href="{% url 'projects:list' %}" class="transition hover:text-white">Projects</a>
+                <a href="{% url 'blog:list' %}" class="transition hover:text-white">Blog</a>
+            </div>
+        </nav>
+
+        <div
+            x-show="open"
+            x-transition.origin.top
+            x-cloak
+            class="border-t border-neutral-800 bg-black sm:hidden">
+            <div class="space-y-1 px-4 py-3 text-sm font-medium text-gray-300">
+                <a href="{% url 'pages:home' %}" class="block rounded px-2 py-2 hover:bg-neutral-900 hover:text-white">Home</a>
+                <a href="{% url 'pages:about' %}" class="block rounded px-2 py-2 hover:bg-neutral-900 hover:text-white">About</a>
+                <a href="{% url 'projects:list' %}" class="block rounded px-2 py-2 hover:bg-neutral-900 hover:text-white">Projects</a>
+                <a href="{% url 'blog:list' %}" class="block rounded px-2 py-2 hover:bg-neutral-900 hover:text-white">Blog</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-16 pt-10 sm:px-6 lg:px-8 lg:pt-14">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-neutral-800 bg-black/80">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <p>&copy; {% now "Y" %} Your Name. All rights reserved.</p>
+            <p class="space-x-3">
+                <span>Built with Django & TailwindCSS.</span>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
+
+

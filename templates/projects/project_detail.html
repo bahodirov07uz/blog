@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} · Projects{% endblock %}
+
+{% block content %}
+<article class="space-y-8">
+    <header class="space-y-4">
+        <p class="text-xs uppercase tracking-[0.2em] text-gray-400">Project</p>
+        <h1 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+            {{ project.title }}
+        </h1>
+        <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400">
+            <span>Launched {{ project.created_at|date:"M j, Y" }}</span>
+            {% if project.tech_stack.all %}
+                <span class="h-1 w-1 rounded-full bg-gray-500"></span>
+                <div class="flex flex-wrap gap-1.5">
+                    {% for tag in project.tech_stack.all %}
+                        <span class="rounded-full bg-neutral-900 px-2 py-1 text-[0.65rem] font-medium text-gray-300">
+                            {{ tag.name }}
+                        </span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% if project.external_link %}
+            <div>
+                <a href="{{ project.external_link }}" target="_blank" rel="noreferrer"
+                   class="inline-flex items-center gap-2 rounded-full border border-white bg-white px-4 py-2 text-xs font-medium tracking-wide text-black transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-white/10">
+                    <span>View live project</span>
+                    <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        {% endif %}
+    </header>
+
+    {% if project.preview_image %}
+        <div class="overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900">
+            <img src="{{ project.preview_image.url }}"
+                 alt="{{ project.title }}"
+                 class="max-h-[420px] w-full object-cover">
+        </div>
+    {% endif %}
+
+    <section class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+        <div class="prose prose-invert max-w-none text-sm leading-relaxed text-gray-200">
+            {% if project.long_description %}
+                {{ project.long_description|linebreaks }}
+            {% else %}
+                <p>Detailed description coming soon.</p>
+            {% endif %}
+        </div>
+
+        {% if project.images.all %}
+            <div class="space-y-4">
+                <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">Gallery</h2>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {% for image in project.images.all %}
+                        <figure class="group overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950">
+                            <img src="{{ image.image.url }}"
+                                 alt="{{ image.caption }}"
+                                 class="h-40 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-44">
+                            {% if image.caption %}
+                                <figcaption class="px-3 py-2 text-[0.7rem] text-gray-300">
+                                    {{ image.caption }}
+                                </figcaption>
+                            {% endif %}
+                        </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </section>
+</article>
+{% endblock %}
+
+
