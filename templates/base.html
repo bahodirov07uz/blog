@@ -28,6 +28,15 @@
 
     <!-- Optional Alpine.js for lightweight interactivity -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H4L3QG0CSF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H4L3QG0CSF');
+</script>
 
     {% block extra_head %}{% endblock %}
 </head>
@@ -37,7 +46,6 @@
         class="sticky top-0 z-30 border-b border-neutral-800 bg-black/80 backdrop-blur">
         <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{% url 'pages:home' %}" class="flex items-center gap-2">
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded bg-white text-black text-sm font-semibold">DP</span>
                 <span class="text-sm font-medium tracking-wide text-gray-200">Muhammadyahyo's blog</span>
             </a>
 
@@ -80,13 +88,10 @@
 
     <footer class="border-t border-neutral-800 bg-black/80">
         <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>&copy; {% now "Y" %} Your Name. All rights reserved.</p>
-            <p class="space-x-3">
-                <span>Built with Django & TailwindCSS.</span>
-            </p>
+            <p>&copy; {% now "Y" %} <a href="https://t.me/m16uzb"></a>Muhammadyahyo.</p>
+
         </div>
     </footer>
 </body>
 </html>
-
 

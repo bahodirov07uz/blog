@@ -7,7 +7,7 @@
     <header class="space-y-4">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-400">Project</p>
         <h1 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            {{ project.title }}
+            {{ project.title|safe }}
         </h1>
         <div class="flex flex-wrap items-center gap-3 text-xs text-gray-400">
             <span>Launched {{ project.created_at|date:"M j, Y" }}</span>
@@ -44,7 +44,7 @@
     <section class="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div class="prose prose-invert max-w-none text-sm leading-relaxed text-gray-200">
             {% if project.long_description %}
-                {{ project.long_description|linebreaks }}
+                {{ project.long_description|safe|linebreaks }}
             {% else %}
                 <p>Detailed description coming soon.</p>
             {% endif %}

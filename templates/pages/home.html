@@ -37,7 +37,7 @@
             <div class="flex items-center justify-between gap-4">
                 <div>
                     <p class="text-xs font-medium uppercase tracking-[0.2em] text-gray-400">Stack</p>
-                    <p class="mt-1 text-sm text-gray-100">Django · Python · TailwindCSS</p>
+                    <p class="mt-1 text-sm text-gray-100">Python · Go · Gin · Django · FastAPI </p>
                 </div>
                 <div class="flex gap-2 text-[10px] font-medium text-gray-300">
                     <span class="rounded-full bg-emerald-500/15 px-2 py-1 text-emerald-300">Available for work</span>
@@ -46,11 +46,11 @@
             <dl class="mt-5 grid grid-cols-3 gap-4 text-xs text-gray-300">
                 <div class="space-y-1">
                     <dt class="text-[0.68rem] uppercase tracking-[0.16em] text-gray-500">Experience</dt>
-                    <dd class="text-sm text-white">5+ yrs</dd>
+                    <dd class="text-sm text-white">2+ yrs</dd>
                 </div>
                 <div class="space-y-1">
                     <dt class="text-[0.68rem] uppercase tracking-[0.16em] text-gray-500">Focus</dt>
-                    <dd class="text-sm text-white">Product engineering</dd>
+                    <dd class="text-sm text-white">Software engineering</dd>
                 </div>
                 <div class="space-y-1">
                     <dt class="text-[0.68rem] uppercase tracking-[0.16em] text-gray-500">Location</dt>
@@ -81,10 +81,6 @@
                             <img src="{{ post.hero_image.url }}"
                                  alt="{{ post.title }}"
                                  class="h-40 w-full object-cover transition duration-500 group-hover:scale-105">
-                        {% else %}
-                            <div class="flex h-40 items-center justify-center text-xs text-gray-500">
-                                No image
-                            </div>
                         {% endif %}
                     </div>
                     <p class="text-[0.68rem] uppercase tracking-[0.16em] text-gray-500">
@@ -92,12 +88,12 @@
                     </p>
                     <h3 class="mt-2 text-sm font-semibold text-gray-100 group-hover:text-white">
                         <a href="{% url 'blog:detail' slug=post.slug %}" class="inline-flex items-baseline gap-1 hover:underline underline-offset-4">
-                            {{ post.title }}
+                            {{ post.title|safe }}
                         </a>
                     </h3>
                     {% if post.excerpt %}
                         <p class="mt-2 line-clamp-3 text-xs leading-relaxed text-gray-400">
-                            {{ post.excerpt }}
+                            {{ post.excerpt|safe}}
                         </p>
                     {% endif %}
                 </article>
@@ -107,6 +103,77 @@
         <p class="text-sm text-gray-400">No posts yet — create your first article in the Django admin.</p>
     {% endif %}
 </section>
+<style>
+    #snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .snowflake {
+        position: absolute;
+        top: -10px;
+        color: rgb(130, 232, 248);
+        user-select: none;
+        cursor: default;
+        filter: blur(1px);
+        opacity: 0.8;
+        animation-name: fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(0) rotate(0deg);
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg);
+        }
+    }
+</style>
+<div id="snow-container"></div>
+
+<script>
+    function createSnowflake() {
+        const container = document.getElementById('snow-container');
+        if (!container) return;
+
+        const snowflake = document.createElement('div');
+
+        // Qor parchalari har xil shaklda bo'lishi uchun
+        const shapes = ['❅', '❄'];
+        snowflake.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+
+        snowflake.classList.add('snowflake');
+
+        // Tasodifiy joylashuv va o'lcham
+        const startLeft = Math.random() * 100;
+        const size = (Math.random() * 10 + 10) + 'px';
+        const duration = (Math.random() * 5 + 5) + 's';
+        const delay = Math.random() * 5 + 's';
+
+        snowflake.style.left = startLeft + 'vw';
+        snowflake.style.fontSize = size;
+        snowflake.style.animationDuration = duration;
+        snowflake.style.animationDelay = delay;
+        snowflake.style.opacity = Math.random();
+
+        container.appendChild(snowflake);
+
+        // Ekrandan chiqib ketgandan keyin o'chirib tashlash
+        setTimeout(() => {
+            snowflake.remove();
+        }, (parseFloat(duration) + parseFloat(delay)) * 1000);
+    }
+
+    // Qor yog'ish tezligi (har 200ms da bitta yangi qor parchasi)
+    setInterval(createSnowflake, 70);
+</script>
 {% endblock %}
 
 

@@ -7,7 +7,7 @@
     <header class="space-y-4">
         <p class="text-xs uppercase tracking-[0.2em] text-gray-400">Blog</p>
         <h1 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            {{ post.title }}
+            {{ post.title|safe }}
         </h1>
         <p class="text-xs uppercase tracking-[0.16em] text-gray-500">
             {{ post.created_at|date:"M j, Y" }}

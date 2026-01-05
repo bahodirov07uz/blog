@@ -28,3 +28,5 @@ def about(request):
     )
 
 
+def adminmi(request):
+    return render(request,"nima.html")

@@ -3,11 +3,11 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "replace-me-in-production"
+SECRET_KEY = "django-insecure-@l9-^)n8q*$_k(q9_vnv4@vjp&f8%&08+&1zm8&$vd0tp9ye12"
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS = ["baxodiov.uz","www.baxodiov.uz",'baxodirov.uz', 'www.baxodirov.uz',]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -82,9 +82,14 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles',
+]
+
+STATIC_ROOT = BASE_DIR / 'static'
+
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
