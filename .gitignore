@@ -1,0 +1,6 @@
+auth.json
+.env
+media
+.venv 
+__pycache__
+env

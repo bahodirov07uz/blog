@@ -1,13 +1,16 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-@l9-^)n8q*$_k(q9_vnv4@vjp&f8%&08+&1zm8&$vd0tp9ye12"
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["baxodiov.uz","www.baxodiov.uz",'baxodirov.uz', 'www.baxodirov.uz',]
+ALLOWED_HOSTS = ["baxodiov.uz","www.baxodiov.uz",'baxodirov.uz', 'www.baxodirov.uz',"127.0.0.1"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -20,6 +23,7 @@ INSTALLED_APPS = [
     "pages",
     "projects",
     "blog",
+    "storages"
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,42 @@ TEMPLATES = [
         },
     },
 ]
+
+
+SUPABASE_PROJECT_ID = os.getenv("SUPABASE_PROJECT_ID")
+SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
+
+PROJECT_REF = os.getenv("SUPABASE_PROJECT_REF") # xemjeqimwayzqvcavsbb
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_QUERYSTRING_AUTH = False
+# settings.py dagi eski AWS qismini quyidagiga almashtiring:
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY") # Kalit nomini tekshiring!
+AWS_STORAGE_BUCKET_NAME = 'media'
+AWS_S3_REGION_NAME = 'ap-southeast-1'
+AWS_S3_ENDPOINT_URL = f'https://{PROJECT_REF}.supabase.co/storage/v1/s3'
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+AWS_S3_CUSTOM_DOMAIN = f'{PROJECT_REF}.supabase.co/storage/v1/object/public/{AWS_STORAGE_BUCKET_NAME}'
+# Media URL to'g'ri
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+AWS_S3_VERIFY = True
+
+AWS_S3_CHECKSUM_MODE = None
+
+# BU JUDA MUHIM:
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -90,9 +130,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / 'static'
 
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
